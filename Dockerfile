@@ -30,6 +30,9 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+# Ensure public directory exists
+RUN mkdir -p ./public
+
 RUN \
   if [ -f yarn.lock ]; then yarn run build; \
   elif [ -f package-lock.json ]; then npm run build; \
@@ -48,7 +51,9 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Remove this line if you do not have this folder
+# Create public directory and copy if exists
+RUN mkdir -p ./public
+# Copy public folder if it exists (this will now work since we created the folder in builder stage)
 COPY --from=builder /app/public ./public
 
 # Set the correct permission for prerender cache
