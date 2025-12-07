@@ -25,6 +25,7 @@
     "@payloadcms/ui": "3.59.1",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
+    "framer-motion": "^11.18.2",
     "graphql": "^16.8.1",
     "next": "15.4.4",
     "payload": "3.59.1",
