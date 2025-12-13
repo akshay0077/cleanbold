@@ -1,14 +1,19 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { useState } from 'react'
 
-export default function Header() {
+interface HeaderProps {
+  data: any
+}
+
+export default function Header({ data }: HeaderProps) {
   const [isServicesOpen, setIsServicesOpen] = useState(false)
 
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault()
-    const element = document.getElementById(targetId)
+    const element = document.getElementById(targetId.replace('#', ''))
     if (element) {
       const headerOffset = 80
       const elementPosition = element.getBoundingClientRect().top
@@ -20,6 +25,8 @@ export default function Header() {
       })
     }
   }
+
+  const logoUrl = typeof data.logo === 'object' ? data.logo?.url : data.logo
 
   return (
     <motion.header
@@ -38,76 +45,54 @@ export default function Header() {
           }}
         >
           <motion.div
-            className="logo-text"
+            className="logo-image-wrapper"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >
-            Clean<span className="logo-bold">bold</span>
-            <span className="logo-dot">.</span>
+            <Image
+              src={logoUrl || '/logo-1.png'}
+              alt="Logo"
+              width={150}
+              height={40}
+              className="logo-image"
+              priority
+            />
           </motion.div>
         </a>
 
-        <nav className="nav-center">
-          <motion.div
-            className="nav-item services-dropdown"
-            onMouseEnter={() => setIsServicesOpen(true)}
-            onMouseLeave={() => setIsServicesOpen(false)}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <a href="#services" onClick={(e) => handleSmoothScroll(e, 'services')}>
-              Services
-              <svg
-                width="12"
-                height="8"
-                viewBox="0 0 12 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className={isServicesOpen ? 'dropdown-arrow open' : 'dropdown-arrow'}
-              >
-                <path
-                  d="M1 1.5L6 6.5L11 1.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
-          </motion.div>
-
-          <motion.a
-            href="#about"
-            onClick={(e) => handleSmoothScroll(e, 'about')}
-            className="nav-link"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-          >
-            About
-          </motion.a>
-
-          <motion.a
-            href="#studio"
-            onClick={(e) => handleSmoothScroll(e, 'studio')}
-            className="nav-link"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-          >
-            Studio
-          </motion.a>
-
-          <motion.a
-            href="#work"
-            onClick={(e) => handleSmoothScroll(e, 'work')}
-            className="nav-link"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-          >
-            Our Work
-          </motion.a>
+        <nav className="nav-left">
+          {data.navigation?.map((item: any, index: number) => (
+            <motion.div
+              key={index}
+              className={item.hasDropdown ? 'nav-item services-dropdown' : 'nav-item'}
+              onMouseEnter={item.hasDropdown ? () => setIsServicesOpen(true) : undefined}
+              onMouseLeave={item.hasDropdown ? () => setIsServicesOpen(false) : undefined}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
+              <a href={item.url} onClick={(e) => handleSmoothScroll(e, item.url)}>
+                {item.label}
+                {item.hasDropdown && (
+                  <svg
+                    width="12"
+                    height="8"
+                    viewBox="0 0 12 8"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={isServicesOpen ? 'dropdown-arrow open' : 'dropdown-arrow'}
+                  >
+                    <path
+                      d="M1 1.5L6 6.5L11 1.5"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                )}
+              </a>
+            </motion.div>
+          ))}
         </nav>
 
         <motion.div
@@ -117,11 +102,11 @@ export default function Header() {
           transition={{ duration: 0.2 }}
         >
           <a
-            href="#contact"
+            href={data.ctaButton?.url || '#contact'}
             className="lets-work-btn"
-            onClick={(e) => handleSmoothScroll(e, 'contact')}
+            onClick={(e) => handleSmoothScroll(e, data.ctaButton?.url || '#contact')}
           >
-            Let's Work Together
+            {data.ctaButton?.text || "Let's Work Together"}
           </a>
         </motion.div>
       </div>

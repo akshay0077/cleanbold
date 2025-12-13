@@ -4,24 +4,21 @@ import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 
-const studioImages = [
-  { id: 1, src: '/hero-image.png', alt: 'Studio space 1' },
-  { id: 2, src: '/hero-image.png', alt: 'Studio space 2' },
-  { id: 3, src: '/hero-image.png', alt: 'Studio space 3' },
-  { id: 4, src: '/hero-image.png', alt: 'Studio space 4' },
-]
+interface StudioSectionProps {
+  data: any
+}
 
-export default function Studio() {
+export default function StudioSection({ data }: StudioSectionProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [_currentIndex, setCurrentIndex] = useState(0)
 
   const _handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? studioImages.length - 1 : prev - 1))
+    setCurrentIndex((prev) => (prev === 0 ? (data.studioImages?.length || 1) - 1 : prev - 1))
   }
 
   const _handleNext = () => {
-    setCurrentIndex((prev) => (prev === studioImages.length - 1 ? 0 : prev + 1))
+    setCurrentIndex((prev) => (prev === (data.studioImages?.length || 1) - 1 ? 0 : prev + 1))
   }
 
   return (
@@ -34,35 +31,35 @@ export default function Studio() {
           transition={{ duration: 0.8 }}
         >
           <div className="studio-title-area">
-            <h2>Studio Cleanbold</h2>
-            <h3>Where Stories Are Shot.</h3>
+            <h2>{data.title || 'Studio Cleanbold'}</h2>
+            <h3>{data.subtitle || 'Where Stories Are Shot.'}</h3>
           </div>
-          <p className="studio-info">
-            Fashion and product shoot studio Ahmedabad with
-            professional lighting and modular sets.
-          </p>
+          <p className="studio-info">{data.description || ''}</p>
         </motion.div>
 
         <div className="studio-carousel">
           <div className="studio-images-wrapper">
-            {studioImages.map((image, index) => (
-              <motion.div
-                key={image.id}
-                className="studio-image-card"
-                initial={{ opacity: 0, x: 100 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={600}
-                  height={400}
-                  className="studio-img"
-                />
-              </motion.div>
-            ))}
+            {data.studioImages?.map((image: any, index: number) => {
+              const imageUrl = typeof image.image === 'object' ? image.image?.url : image.image
+              return (
+                <motion.div
+                  key={index}
+                  className="studio-image-card"
+                  initial={{ opacity: 0, x: 100 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <Image
+                    src={imageUrl || '/hero-image.png'}
+                    alt={`Studio space ${index + 1}`}
+                    width={600}
+                    height={400}
+                    className="studio-img"
+                  />
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </div>

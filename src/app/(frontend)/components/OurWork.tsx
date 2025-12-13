@@ -2,50 +2,28 @@
 
 import { motion, useInView } from 'framer-motion'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
-const offerings = [
-  {
-    id: 1,
-    title: 'Branding & Creative',
-    description: 'Lorem ipsum dolor sit amet consectetur. Tristique massa consequat rutrum tempus. Lacus aliquam posuere eget et fringilla luctus dictum ac nulla.',
-    color: '#1e3a8a', // Dark blue
-    image: '/hero-image.png',
-  },
-  {
-    id: 2,
-    title: 'Digital & Social Media',
-    description: 'Lorem ipsum dolor sit amet consectetur. Tristique massa consequat rutrum tempus. Lacus aliquam posuere eget et fringilla luctus dictum ac nulla.',
-    color: '#1f2937', // Dark gray
-    image: '/hero-image.png',
-  },
-  {
-    id: 3,
-    title: 'Media & PR',
-    description: 'Lorem ipsum dolor sit amet consectetur. Tristique massa consequat rutrum tempus. Lacus aliquam posuere eget et fringilla luctus dictum ac nulla.',
-    color: '#0d9488', // Teal
-    image: '/hero-image.png',
-  },
-  {
-    id: 4,
-    title: 'Production & Shoots',
-    description: 'Lorem ipsum dolor sit amet consectetur. Tristique massa consequat rutrum tempus. Lacus aliquam posuere eget et fringilla luctus dictum ac nulla.',
-    color: '#7c3aed', // Purple
-    image: '/hero-image.png',
-  },
-]
+interface CoreOfferingsProps {
+  data: any[]
+  settings: any
+}
 
-export default function CoreOfferings() {
+export default function CoreOfferings({ data, settings }: CoreOfferingsProps) {
   const ref = useRef(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
-  const [_currentIndex, setCurrentIndex] = useState(0)
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? offerings.length - 1 : prev - 1))
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -380, behavior: 'smooth' })
+    }
   }
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev === offerings.length - 1 ? 0 : prev + 1))
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 380, behavior: 'smooth' })
+    }
   }
 
   return (
@@ -57,53 +35,81 @@ export default function CoreOfferings() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <p className="section-label">Core Offerings</p>
-          <h2>We Turn Ideas Into Impact.</h2>
+          <p className="section-label">{settings?.sectionLabel || 'Core Offerings'}</p>
+          <h2>{settings?.mainTitle || 'We Turn Ideas Into Impact.'}</h2>
           <p className="section-description">
-            From brand strategy to content production, we deliver creative and
-            performance-driven marketing under one roof.
+            {settings?.description ||
+              'From brand strategy to content production, we deliver creative and performance-driven marketing under one roof.'}
           </p>
         </motion.div>
 
         <div className="offerings-carousel">
-          <button className="carousel-btn prev" onClick={handlePrev}>
+          <button className="carousel-btn prev" onClick={handlePrev} aria-label="Previous">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
             </svg>
           </button>
 
-          <div className="offerings-grid">
-            {offerings.map((offering, index) => (
-              <motion.div
-                key={offering.id}
-                className="offering-card"
-                style={{ backgroundColor: offering.color }}
-                initial={{ opacity: 0, x: 100 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                whileHover={{ y: -10 }}
-              >
-                <div className="card-content">
-                  <h3>{offering.title}</h3>
-                  <p>{offering.description}</p>
-                  
-                  <div className="card-image">
-                    <Image
-                      src={offering.image}
-                      alt={offering.title}
-                      width={400}
-                      height={300}
-                      className="offering-img"
-                    />
+          <div className="offerings-scroll" ref={scrollRef}>
+            {data?.map((offering: any, index: number) => {
+              const imageUrl =
+                typeof offering.image === 'object' ? offering.image?.url : offering.image
+              return (
+                <motion.div
+                  key={offering.id || index}
+                  className={`offering-card ${offering.imagePosition === 'top' ? 'image-top' : 'image-bottom'}`}
+                  style={{ backgroundColor: offering.color }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                >
+                  {offering.imagePosition === 'top' && (
+                    <div className="card-image-top">
+                      <Image
+                        src={imageUrl || '/hero-image.png'}
+                        alt={offering.title}
+                        width={280}
+                        height={200}
+                        className="offering-img"
+                      />
+                    </div>
+                  )}
+
+                  <div className="card-content">
+                    <h2>{offering.title}</h2>
+                    <p>{offering.description}</p>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+
+                  {offering.imagePosition === 'bottom' && (
+                    <div className="card-image-bottom">
+                      <Image
+                        src={imageUrl || '/hero-image.png'}
+                        alt={offering.title}
+                        width={280}
+                        height={200}
+                        className="offering-img"
+                      />
+                    </div>
+                  )}
+                </motion.div>
+              )
+            })}
           </div>
 
-          <button className="carousel-btn next" onClick={handleNext}>
+          <button className="carousel-btn next" onClick={handleNext} aria-label="Next">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
             </svg>
           </button>
         </div>

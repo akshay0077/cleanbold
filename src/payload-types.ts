@@ -69,6 +69,11 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    projects: Project;
+    'project-categories': ProjectCategory;
+    'core-offerings': CoreOffering;
+    'featured-clients': FeaturedClient;
+    'why-brands-choose': WhyBrandsChoose;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -77,6 +82,11 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    'project-categories': ProjectCategoriesSelect<false> | ProjectCategoriesSelect<true>;
+    'core-offerings': CoreOfferingsSelect<false> | CoreOfferingsSelect<true>;
+    'featured-clients': FeaturedClientsSelect<false> | FeaturedClientsSelect<true>;
+    'why-brands-choose': WhyBrandsChooseSelect<false> | WhyBrandsChooseSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -84,8 +94,20 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    header: Header;
+    hero: Hero;
+    footer: Footer;
+    'studio-section': StudioSection;
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    hero: HeroSelect<false> | HeroSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    'studio-section': StudioSectionSelect<false> | StudioSectionSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -158,6 +180,106 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  title: string;
+  description?: string | null;
+  category: string | ProjectCategory;
+  image: string | Media;
+  size: 'large' | 'small';
+  featured?: boolean | null;
+  /**
+   * Lower numbers appear first
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "project-categories".
+ */
+export interface ProjectCategory {
+  id: string;
+  name: string;
+  /**
+   * URL-friendly version of the name
+   */
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "core-offerings".
+ */
+export interface CoreOffering {
+  id: string;
+  title: string;
+  description: string;
+  color: '#1e3a8a' | '#1f2937' | '#0d9488' | '#7c3aed';
+  image: string | Media;
+  imagePosition: 'top' | 'bottom';
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "featured-clients".
+ */
+export interface FeaturedClient {
+  id: string;
+  name: string;
+  logo: string | Media;
+  row: 1 | 2 | 3 | 4;
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "why-brands-choose".
+ */
+export interface WhyBrandsChoose {
+  id: string;
+  sectionType: 'section-1' | 'section-2' | 'section-3';
+  sectionLabel: string;
+  mainHeading: string;
+  description: string;
+  /**
+   * e.g., "What Sets Us Apart:"
+   */
+  featuresTitle?: string | null;
+  features?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Only used for "Our Approach" section
+   */
+  approachSteps?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -170,6 +292,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'project-categories';
+        value: string | ProjectCategory;
+      } | null)
+    | ({
+        relationTo: 'core-offerings';
+        value: string | CoreOffering;
+      } | null)
+    | ({
+        relationTo: 'featured-clients';
+        value: string | FeaturedClient;
+      } | null)
+    | ({
+        relationTo: 'why-brands-choose';
+        value: string | WhyBrandsChoose;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -255,6 +397,89 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  category?: T;
+  image?: T;
+  size?: T;
+  featured?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "project-categories_select".
+ */
+export interface ProjectCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "core-offerings_select".
+ */
+export interface CoreOfferingsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  color?: T;
+  image?: T;
+  imagePosition?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "featured-clients_select".
+ */
+export interface FeaturedClientsSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  row?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "why-brands-choose_select".
+ */
+export interface WhyBrandsChooseSelect<T extends boolean = true> {
+  sectionType?: T;
+  sectionLabel?: T;
+  mainHeading?: T;
+  description?: T;
+  featuresTitle?: T;
+  features?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  approachSteps?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents_select".
  */
 export interface PayloadLockedDocumentsSelect<T extends boolean = true> {
@@ -284,6 +509,279 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: string;
+  logo: string | Media;
+  navigation?:
+    | {
+        label: string;
+        /**
+         * e.g., #services, #about, #studio
+         */
+        url: string;
+        hasDropdown?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  ctaButton: {
+    text: string;
+    url: string;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero".
+ */
+export interface Hero {
+  id: string;
+  heroImage: string | Media;
+  title?: string | null;
+  subtitle?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: string;
+  contactSection: {
+    title: string;
+    subtitle: string;
+    formTitle: string;
+  };
+  companyInfo: {
+    brandName: string;
+    tagline: string;
+    phone: string;
+    email: string;
+    location: string;
+  };
+  socialLinks?:
+    | {
+        platform: 'linkedin' | 'facebook' | 'instagram' | 'twitter';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  copyright: string;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "studio-section".
+ */
+export interface StudioSection {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  studioImages?:
+    | {
+        image: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  perfectFor?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
+  detailsSection: {
+    title: string;
+    description: string;
+    locationTitle: string;
+    locationAddress: string;
+    bookButtonText: string;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: string;
+  siteTitle: string;
+  siteDescription: string;
+  ogImage?: (string | null) | Media;
+  projectsSection?: {
+    sectionLabel?: string | null;
+    mainTitle?: string | null;
+    description?: string | null;
+    exploreButtonText?: string | null;
+  };
+  coreOfferingsSection?: {
+    sectionLabel?: string | null;
+    mainTitle?: string | null;
+    description?: string | null;
+  };
+  featuredClientsSection?: {
+    sectionLabel?: string | null;
+    mainTitle?: string | null;
+    description?: string | null;
+    ctaButtonText?: string | null;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  navigation?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        hasDropdown?: T;
+        id?: T;
+      };
+  ctaButton?:
+    | T
+    | {
+        text?: T;
+        url?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "hero_select".
+ */
+export interface HeroSelect<T extends boolean = true> {
+  heroImage?: T;
+  title?: T;
+  subtitle?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  contactSection?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        formTitle?: T;
+      };
+  companyInfo?:
+    | T
+    | {
+        brandName?: T;
+        tagline?: T;
+        phone?: T;
+        email?: T;
+        location?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  copyright?: T;
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "studio-section_select".
+ */
+export interface StudioSectionSelect<T extends boolean = true> {
+  title?: T;
+  subtitle?: T;
+  description?: T;
+  studioImages?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  perfectFor?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  detailsSection?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        locationTitle?: T;
+        locationAddress?: T;
+        bookButtonText?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteTitle?: T;
+  siteDescription?: T;
+  ogImage?: T;
+  projectsSection?:
+    | T
+    | {
+        sectionLabel?: T;
+        mainTitle?: T;
+        description?: T;
+        exploreButtonText?: T;
+      };
+  coreOfferingsSection?:
+    | T
+    | {
+        sectionLabel?: T;
+        mainTitle?: T;
+        description?: T;
+      };
+  featuredClientsSection?:
+    | T
+    | {
+        sectionLabel?: T;
+        mainTitle?: T;
+        description?: T;
+        ctaButtonText?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

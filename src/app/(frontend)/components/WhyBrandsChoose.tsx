@@ -3,30 +3,11 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 
-const approachSteps = [
-  {
-    id: 'discover',
-    title: 'Discover',
-    description: 'Understand your brand, goals & audience',
-  },
-  {
-    id: 'define',
-    title: 'Define',
-    description: 'Develop the strategy and creative direction.',
-  },
-  {
-    id: 'design',
-    title: 'Design',
-    description: 'Build campaigns that connect emotionally.',
-  },
-  {
-    id: 'deliver',
-    title: 'Deliver',
-    description: 'Launch, measure, and optimize for growth.',
-  },
-]
+interface WhyBrandsChooseProps {
+  data: any[]
+}
 
-export default function WhyBrandsChoose() {
+export default function WhyBrandsChoose({ data }: WhyBrandsChooseProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -48,52 +29,49 @@ export default function WhyBrandsChoose() {
         </div>
 
         <div className="why-brands-content-wrapper">
-          <motion.div
-            className="why-brands-content"
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <p className="section-label">Why Brands Choose Cleanbold.</p>
-            <h2 className="main-heading">One Team. One Vision. Real Results.</h2>
-            <p className="description">
-              Most agencies separate creativity from performance; we fuse them. At Cleanbold,
-              strategy, storytelling, and scaling work together in one cohesive system.
-            </p>
+          {data?.[0] && (
+            <motion.div
+              className="why-brands-content"
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <p className="section-label-white">{data[0].sectionLabel}</p>
+              <h2 className="main-heading-white">{data[0].mainHeading}</h2>
+              <p className="description-white">{data[0].description}</p>
 
-            <div className="divider-line"></div>
+              <div className="divider-line-white"></div>
 
-            <div className="features-section">
-              <h3>What Sets Us Apart:</h3>
-              <div className="features-grid-two-col">
-                <div className="features-column">
-                  <div className="feature-item">
-                    <span className="feature-bullet"></span>
-                    <p>Data-driven storytelling</p>
-                  </div>
-                  <div className="feature-item">
-                    <span className="feature-bullet"></span>
-                    <p>In-house content & production studio</p>
-                  </div>
-                  <div className="feature-item">
-                    <span className="feature-bullet"></span>
-                    <p>Proven success in real estate, fashion, interiors, D2C & lifestyle</p>
+              {data[0].features && data[0].features.length > 0 && (
+                <div className="features-section">
+                  <h3 className="features-title-white">{data[0].featuresTitle}</h3>
+                  <div className="features-grid-two-col">
+                    <div className="features-column">
+                      {data[0].features
+                        .slice(0, Math.ceil(data[0].features.length / 2))
+                        .map((feature: any, index: number) => (
+                          <div key={index} className="feature-item-white">
+                            <span className="feature-bullet-white"></span>
+                            <p>{feature.text}</p>
+                          </div>
+                        ))}
+                    </div>
+                    <div className="features-column">
+                      {data[0].features
+                        .slice(Math.ceil(data[0].features.length / 2))
+                        .map((feature: any, index: number) => (
+                          <div key={index} className="feature-item-white">
+                            <span className="feature-bullet-white"></span>
+                            <p>{feature.text}</p>
+                          </div>
+                        ))}
+                    </div>
                   </div>
                 </div>
-                <div className="features-column">
-                  <div className="feature-item">
-                    <span className="feature-bullet"></span>
-                    <p>Brand design with measurable outcomes</p>
-                  </div>
-                  <div className="feature-item">
-                    <span className="feature-bullet"></span>
-                    <p>We think creatively and deliver commercially</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+              )}
+            </motion.div>
+          )}
         </div>
       </div>
 
@@ -117,30 +95,32 @@ export default function WhyBrandsChoose() {
             viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="section-label">Our Approach</p>
-            <h2 className="main-heading">Clarity. Creativity. Impact.</h2>
-            <p className="description">
+            <p className="section-label-white">Our Approach</p>
+            <h2 className="main-heading-white">Clarity. Creativity. Impact.</h2>
+            <p className="description-white">
               Most agencies separate creativity from performance; we fuse them. At Cleanbold,
               strategy, storytelling, and scaling work together in one cohesive system.
             </p>
 
-            <div className="divider-line"></div>
+            <div className="divider-line-white"></div>
 
-            <div className="approach-grid">
-              {approachSteps.map((step, index) => (
-                <motion.div
-                  key={step.id}
-                  className="approach-item"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.5 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                >
-                  <h4>{step.title}</h4>
-                  <p>{step.description}</p>
-                </motion.div>
-              ))}
-            </div>
+            {data[1]?.approachSteps && data[1].approachSteps.length > 0 && (
+              <div className="approach-grid">
+                {data[1].approachSteps.map((step: any, index: number) => (
+                  <motion.div
+                    key={index}
+                    className="approach-item"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: false, amount: 0.5 }}
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                  >
+                    <h4>{step.title}</h4>
+                    <p>{step.description}</p>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </motion.div>
         </div>
       </div>
@@ -158,47 +138,46 @@ export default function WhyBrandsChoose() {
         </div>
 
         <div className="why-brands-content-wrapper">
-          <motion.div
-            className="why-brands-content"
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <p className="section-label">Lorem Ipsum Dolar</p>
-            <h2 className="main-heading">Where Creativity Meets Conversion.</h2>
-            <p className="description">
-              Founded in 2025, Cleanbold Advertising was born from one belief advertising should do
-              more than look good; it should work. We started as a creative collective helping
-              brands find their boldest voice, and evolved into a full-scale agency that blends
-              design, storytelling, and performance marketing.
-            </p>
+          {data?.[2] && (
+            <motion.div
+              className="why-brands-content"
+              initial={{ opacity: 0, y: 100 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <p className="section-label-white">{data[2].sectionLabel}</p>
+              <h2 className="main-heading-white">{data[2].mainHeading}</h2>
+              <p className="description-white">{data[2].description}</p>
 
-            <div className="divider-line"></div>
+              <div className="divider-line-white"></div>
 
-            <div className="features-grid-two-col">
-              <div className="features-column">
-                <div className="feature-item">
-                  <span className="feature-bullet"></span>
-                  <p>We Think Like Brand Builders.</p>
+              {data[2].features && data[2].features.length > 0 && (
+                <div className="features-grid-two-col">
+                  <div className="features-column">
+                    {data[2].features
+                      .slice(0, Math.ceil(data[2].features.length / 2))
+                      .map((feature: any, index: number) => (
+                        <div key={index} className="feature-item-white">
+                          <span className="feature-bullet-white"></span>
+                          <p>{feature.text}</p>
+                        </div>
+                      ))}
+                  </div>
+                  <div className="features-column">
+                    {data[2].features
+                      .slice(Math.ceil(data[2].features.length / 2))
+                      .map((feature: any, index: number) => (
+                        <div key={index} className="feature-item-white">
+                          <span className="feature-bullet-white"></span>
+                          <p>{feature.text}</p>
+                        </div>
+                      ))}
+                  </div>
                 </div>
-                <div className="feature-item">
-                  <span className="feature-bullet"></span>
-                  <p>Create Like Storytellers</p>
-                </div>
-              </div>
-              <div className="features-column">
-                <div className="feature-item">
-                  <span className="feature-bullet"></span>
-                  <p>From Clean Strategy To Bold Growth .</p>
-                </div>
-                <div className="feature-item">
-                  <span className="feature-bullet"></span>
-                  <p>Scale Like Marketers.</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+              )}
+            </motion.div>
+          )}
         </div>
       </div>
     </section>

@@ -4,7 +4,11 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
 
-export default function Footer() {
+interface FooterProps {
+  data: any
+}
+
+export default function Footer({ data }: FooterProps) {
   const [formData, setFormData] = useState({
     name: '',
     companyName: '',
@@ -40,16 +44,14 @@ export default function Footer() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
               <h2 className="footer-contact-title">
-                Let&apos;s Build
-                <br />
-                Something Bold
-                <br />
-                And Better
+                {data.contactSection?.title?.split('\\n').map((line: string, i: number) => (
+                  <span key={i}>
+                    {line}
+                    <br />
+                  </span>
+                )) || "Let's Build Something Bold And Better"}
               </h2>
-              <p className="footer-contact-subtitle">
-                Whether you&apos;re launching, scaling, or redefining your brand let&apos;s create
-                something extraordinary together.
-              </p>
+              <p className="footer-contact-subtitle">{data.contactSection?.subtitle || ''}</p>
             </motion.div>
 
             <motion.div
@@ -59,7 +61,9 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             >
-              <h3 className="footer-form-title">Start The Conversation</h3>
+              <h3 className="footer-form-title">
+                {data.contactSection?.formTitle || 'Start The Conversation'}
+              </h3>
               <form className="footer-form" onSubmit={handleSubmit}>
                 <input
                   type="text"
@@ -126,11 +130,26 @@ export default function Footer() {
             <div className="footer-info-content">
               <div className="footer-brand-section">
                 <h2 className="footer-brand-name">
-                  Clean<span className="footer-brand-bold">bold</span>
-                  <span className="footer-brand-dot">.</span>{' '}
-                  <span className="footer-brand-advertising">Advertising</span>
+                  {data.companyInfo?.brandName ? (
+                    <>
+                      {data.companyInfo.brandName.split('bold')[0]}
+                      <span className="footer-brand-bold">bold</span>
+                      <span className="footer-brand-dot">.</span>{' '}
+                      <span className="footer-brand-advertising">
+                        {data.companyInfo.brandName.split('.')[1]?.trim()}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      Clean<span className="footer-brand-bold">bold</span>
+                      <span className="footer-brand-dot">.</span>{' '}
+                      <span className="footer-brand-advertising">Advertising</span>
+                    </>
+                  )}
                 </h2>
-                <p className="footer-brand-tagline">Where Creativity Converts.</p>
+                <p className="footer-brand-tagline">
+                  {data.companyInfo?.tagline || 'Where Creativity Converts.'}
+                </p>
               </div>
 
               <div className="footer-contact-info">
@@ -152,7 +171,7 @@ export default function Footer() {
                       fill="currentColor"
                     />
                   </svg>
-                  <span>+91 79902 34633</span>
+                  <span>{data.companyInfo?.phone || '+91 79902 34633'}</span>
                 </div>
 
                 <div className="footer-info-item">
@@ -169,7 +188,7 @@ export default function Footer() {
                       fill="currentColor"
                     />
                   </svg>
-                  <span>cleanboldadvertising@gmail.com</span>
+                  <span>{data.companyInfo?.email || 'cleanboldadvertising@gmail.com'}</span>
                 </div>
 
                 <div className="footer-info-item">
@@ -186,78 +205,55 @@ export default function Footer() {
                       fill="currentColor"
                     />
                   </svg>
-                  <span>Ahmedabad, India</span>
+                  <span>{data.companyInfo?.location || 'Ahmedabad, India'}</span>
                 </div>
               </div>
             </div>
 
             <div className="footer-bottom-section">
-              <p className="footer-copyright">© 2025 Cleanbold Advertising. All Rights Reserved.</p>
+              <p className="footer-copyright">
+                {data.copyright || '© 2025 Cleanbold Advertising. All Rights Reserved.'}
+              </p>
               <div className="footer-social-links">
-                <Link
-                  href="https://www.linkedin.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-social-link"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-                  </svg>
-                </Link>
-                <Link
-                  href="https://www.facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-social-link"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                  </svg>
-                </Link>
-                <Link
-                  href="https://www.instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-social-link"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
-                  </svg>
-                </Link>
-                <Link
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="footer-social-link"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                  </svg>
-                </Link>
+                {data.socialLinks?.map((link: any, index: number) => {
+                  const getSocialIcon = (platform: string) => {
+                    const icons: { [key: string]: JSX.Element } = {
+                      linkedin: (
+                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                      ),
+                      facebook: (
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                      ),
+                      instagram: (
+                        <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
+                      ),
+                      twitter: (
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                      ),
+                    }
+                    return icons[platform.toLowerCase()] || null
+                  }
+
+                  return (
+                    <Link
+                      key={index}
+                      href={link.url || '#'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="footer-social-link"
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        {getSocialIcon(link.platform)}
+                      </svg>
+                    </Link>
+                  )
+                })}
               </div>
             </div>
           </motion.div>

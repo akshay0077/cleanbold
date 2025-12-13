@@ -5,35 +5,46 @@ import CoreOfferings from './components/OurWork'
 import Projects from './components/Projects'
 import FeaturedClients from './components/FeaturedClients'
 import WhyBrandsChoose from './components/WhyBrandsChoose'
-import Studio from './components/Studio'
-import Contact from './components/Contact'
 import StudioSection from './components/StudioSection'
 import Footer from './components/Footer'
+import { getHomePageData } from '@/lib/payload'
 import './styles.css'
 import './components-styles.css'
 
 export default async function HomePage() {
+  const data = await getHomePageData()
+
   return (
     <div className="home-page">
-      <Header />
+      <Header data={data.header} />
       <div id="hero">
-        <Hero />
+        <Hero data={data.hero} />
       </div>
       <div id="services">
-        <CoreOfferings />
+        <CoreOfferings
+          data={data.coreOfferings}
+          settings={data.siteSettings.coreOfferingsSection}
+        />
       </div>
       <div id="work">
-        <Projects />
+        <Projects
+          data={data.projects}
+          categories={data.projectCategories}
+          settings={data.siteSettings.projectsSection}
+        />
       </div>
-      <FeaturedClients />
+      <FeaturedClients
+        data={data.featuredClients}
+        settings={data.siteSettings.featuredClientsSection}
+      />
       <div id="about">
-        <WhyBrandsChoose />
+        <WhyBrandsChoose data={data.whyBrandsChoose} />
       </div>
       <div id="studio">
-        <StudioSection />
+        <StudioSection data={data.studioSection} />
       </div>
       <div id="contact">
-        <Footer />
+        <Footer data={data.footer} />
       </div>
     </div>
   )

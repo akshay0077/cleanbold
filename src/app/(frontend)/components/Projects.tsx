@@ -4,44 +4,23 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { useState } from 'react'
 
-const categories = ['All', 'Real Estate', 'Fashion', 'FMCG', 'Health Care', 'Fitness']
+interface ProjectsProps {
+  data: any[]
+  categories: any[]
+  settings: any
+}
 
-const projects = [
-  {
-    id: 1,
-    title:
-      'Lorem Ipsum Dolor Sit Amet Consectetur. Morbi Ut Elit Amet Amet Tempor Dignissim Quam Feugiat.',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Vitae sem amet cras blandit lacus auctor adipiscing et dictum. Mauris arcu in amet sagittis dui dui velit. Sit sit et consequat sed mauris vulputate.',
-    category: 'Real Estate',
-    image: '/project/project-1.png',
-    size: 'large',
-  },
-  {
-    id: 2,
-    title:
-      'Lorem Ipsum Dolor Sit Amet Consectetur. Morbi Ut Elit Amet Amet Tempor Dignissim Quam Feugiat.',
-    category: 'Fashion',
-    image: '/project/project-2.png',
-    size: 'small',
-  },
-  {
-    id: 3,
-    title:
-      'Lorem Ipsum Dolor Sit Amet Consectetur. Morbi Ut Elit Amet Amet Tempor Dignissim Quam Feugiat.',
-    category: 'Category Tag',
-    image: '/project/project-3.png',
-    size: 'small',
-  },
-]
-
-export default function Projects() {
+export default function Projects({ data, categories, settings }: ProjectsProps) {
   const [selectedCategory, setSelectedCategory] = useState('All')
 
   const filteredProjects =
     selectedCategory === 'All'
-      ? projects
-      : projects.filter((project) => project.category === selectedCategory)
+      ? data
+      : data.filter((project: any) => {
+          const category =
+            typeof project.category === 'object' ? project.category?.name : project.category
+          return category === selectedCategory
+        })
 
   return (
     <section className="projects-section">
@@ -53,11 +32,13 @@ export default function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <p className="section-label-projects">Our Projects</p>
-          <h2 className="projects-main-title">Lorem Ipsum Dolar Simit.</h2>
+          <p className="section-label-projects">{settings?.sectionLabel || 'Our Projects'}</p>
+          <h2 className="projects-main-title">
+            {settings?.mainTitle || 'Lorem Ipsum Dolar Simit.'}
+          </h2>
           <p className="projects-description">
-            Lorem ipsum dolor sit amet consectetur. Habitant rutrum id ornare sit curabitur morbi
-            odio. Tristique tincidunt leo.
+            {settings?.description ||
+              'Lorem ipsum dolor sit amet consectetur. Habitant rutrum id ornare sit curabitur morbi odio. Tristique tincidunt leo.'}
           </p>
         </motion.div>
 
@@ -68,11 +49,11 @@ export default function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {categories.map((category, index) => (
+          {categories?.map((category: any, index: number) => (
             <motion.button
-              key={category}
-              className={`filter-btn ${selectedCategory === category ? 'active' : ''}`}
-              onClick={() => setSelectedCategory(category)}
+              key={category.id || index}
+              className={`filter-btn ${selectedCategory === category.name ? 'active' : ''}`}
+              onClick={() => setSelectedCategory(category.name)}
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -80,39 +61,45 @@ export default function Projects() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {category}
+              {category.name}
             </motion.button>
           ))}
         </motion.div>
 
         <div className="projects-grid-layout">
-          {filteredProjects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              className={`project-card-item ${project.size === 'large' ? 'project-large' : 'project-small'}`}
-              initial={{ opacity: 0, y: 80 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.8, delay: index * 0.15 }}
-            >
-              <div className="project-card-inner">
-                <div className="project-image-container">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    width={800}
-                    height={600}
-                    className="project-image"
-                  />
-                  <span className="project-category-badge">{project.category}</span>
+          {filteredProjects?.map((project: any, index: number) => {
+            const imageUrl = typeof project.image === 'object' ? project.image?.url : project.image
+            const categoryName =
+              typeof project.category === 'object' ? project.category?.name : project.category
+
+            return (
+              <motion.div
+                key={project.id || index}
+                className={`project-card-item ${project.size === 'large' ? 'project-large' : 'project-small'}`}
+                initial={{ opacity: 0, y: 80 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.8, delay: index * 0.15 }}
+              >
+                <div className="project-card-inner">
+                  <div className="project-image-container">
+                    <Image
+                      src={imageUrl || '/project/project-1.png'}
+                      alt={project.title}
+                      width={800}
+                      height={600}
+                      className="project-image"
+                    />
+                    <span className="project-category-badge">{categoryName}</span>
+                  </div>
+                  <div className="project-content">
+                    <h3 className="project-title">{project.title}</h3>
+                    {project.description && <p className="project-desc">{project.description}</p>}
+                  </div>
                 </div>
-                <div className="project-content">
-                  <h3 className="project-title">{project.title}</h3>
-                  {project.description && <p className="project-desc">{project.description}</p>}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            )
+          })}
         </div>
 
         <motion.div
@@ -122,7 +109,9 @@ export default function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <button className="explore-more-btn">Explore More</button>
+          <button className="explore-more-btn">
+            {settings?.exploreButtonText || 'Explore More'}
+          </button>
         </motion.div>
       </div>
     </section>
