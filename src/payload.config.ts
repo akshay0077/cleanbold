@@ -54,7 +54,7 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    // SEO Plugin - adds SEO fields to all collections and globals
+    // SEO Plugin - adds SEO fields to all collections and globals in a separate tab
     seoPlugin({
       collections: [
         'projects',
@@ -69,6 +69,7 @@ export default buildConfig({
         doc?.title || doc?.name || doc?.sectionLabel || 'Cleanbold Advertising',
       generateDescription: ({ doc }: any) =>
         doc?.description || doc?.tagline || 'Where Creativity Converts',
+      tabbedUI: true,
     }),
     // S3 Storage Plugin - stores media files in Cloudflare R2 (S3-compatible)
     s3Storage({

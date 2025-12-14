@@ -51,6 +51,13 @@ export const Footer: GlobalConfig = {
           label: 'Brand Name',
         },
         {
+          name: 'advertising',
+          type: 'text',
+          required: true,
+          defaultValue: 'Advertising',
+          label: 'Advertising',
+        },
+        {
           name: 'tagline',
           type: 'text',
           required: true,

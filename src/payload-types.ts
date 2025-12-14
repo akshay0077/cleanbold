@@ -653,6 +653,7 @@ export interface Footer {
   };
   companyInfo: {
     brandName: string;
+    advertising: string;
     tagline: string;
     phone: string;
     email: string;
@@ -824,6 +825,7 @@ export interface FooterSelect<T extends boolean = true> {
     | T
     | {
         brandName?: T;
+        advertising?: T;
         tagline?: T;
         phone?: T;
         email?: T;

@@ -35,12 +35,9 @@ export default function CoreOfferings({ data, settings }: CoreOfferingsProps) {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <p className="section-label">{settings?.sectionLabel || 'Core Offerings'}</p>
-          <h2>{settings?.mainTitle || 'We Turn Ideas Into Impact.'}</h2>
-          <p className="section-description">
-            {settings?.description ||
-              'From brand strategy to content production, we deliver creative and performance-driven marketing under one roof.'}
-          </p>
+          <p className="section-label">{settings?.sectionLabel}</p>
+          <h2>{settings?.mainTitle}</h2>
+          <p className="section-description">{settings?.description}</p>
         </motion.div>
 
         <div className="offerings-carousel">
@@ -59,11 +56,16 @@ export default function CoreOfferings({ data, settings }: CoreOfferingsProps) {
             {data?.map((offering: any, index: number) => {
               const imageUrl =
                 typeof offering.image === 'object' ? offering.image?.url : offering.image
+              const backgroundImage = `/coreoffering/Image-${(index % 4) + 1}.png`
               return (
                 <motion.div
                   key={offering.id || index}
                   className={`offering-card ${offering.imagePosition === 'top' ? 'image-top' : 'image-bottom'}`}
-                  style={{ backgroundColor: offering.color }}
+                  style={{
+                    backgroundImage: `url('${backgroundImage}')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.6, delay: index * 0.1 }}

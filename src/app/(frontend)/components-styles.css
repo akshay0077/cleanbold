@@ -188,7 +188,10 @@
   position: relative;
   width: 100% !important;
   min-height: 100vh;
-  background: linear-gradient(180deg, #0a1f44 0%, #1a3a6e 50%, #0d2851 100%);
+  background: url('/background-image.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   overflow: hidden;
   padding-top: 100px;
 }
@@ -203,11 +206,10 @@
 .hero-image-container {
   position: relative;
   width: 100%!important;
-  height: calc(100vh - 140px);
-  border-radius: 24px;
   overflow: hidden;
   max-width: 100% !important;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  /* box-shadow: 0 0 0 0 !important; */
+  color: white;
 }
 
 .hero-image {
@@ -234,7 +236,6 @@
   
   .hero-image-container {
     height: calc(100vh - 120px);
-    border-radius: 16px;
   }
 }
 
@@ -244,7 +245,6 @@
   }
   
   .hero-image-container {
-    border-radius: 12px;
     justify-content: center;
   }
 }
@@ -461,12 +461,10 @@
 }
 
 .section-label {
-  font-size: 14px;
+  font-size: 22px;
   font-weight: 600;
-  color: var(--color-gray);
-  text-transform: uppercase;
-  letter-spacing: 1px;
   margin-bottom: 12px;
+  font-style: 'Biennale';
 }
 
 .offerings-header h2 {
@@ -479,7 +477,7 @@
 .section-description {
   font-size: 18px;
   color: var(--color-gray);
-  max-width: 700px;
+  max-width: 1250px;
   line-height: 1.6;
 }
 
@@ -587,6 +585,7 @@
   object-fit: cover;
   margin:20px;
   margin-left:30px;
+  background: url('/background-image.png');
 }
 
 /* =================================================================
@@ -594,7 +593,10 @@
    ================================================================= */
 .projects-section {
   padding: 80px 60px;
-  background: linear-gradient(135deg, #0a2463 0%, #1e3a8a 50%, #3b82f6 100%);
+  background: url('/background-image.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: white;
   position: relative;
   overflow: hidden;
@@ -613,7 +615,6 @@
 .section-label-projects {
   font-size: 14px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
   margin-bottom: 12px;
   display: block;
   text-transform: uppercase;
@@ -862,16 +863,6 @@
   padding: 0 60px;
 }
 
-.section-label {
-  font-size: 16px;
-  font-weight: 600;
-  color: #666;
-  margin-bottom: 16px;
-  display: block;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
 .clients-header h2 {
   font-size: clamp(40px, 5vw, 56px);
   font-weight: 800;
@@ -882,13 +873,6 @@
 
 .dot-accent {
   color: #0052ff;
-}
-
-.section-description {
-  font-size: clamp(16px, 1.5vw, 18px);
-  color: #666;
-  max-width: 700px;
-  line-height: 1.7;
 }
 
 /* Marquee Wrapper */
@@ -985,20 +969,22 @@
 }
 
 .see-work-btn {
-  background: #0052ff;
+  background: rgba(1, 30, 244, 1);
   color: white;
   border: none;
-  padding: 18px 50px;
-  border-radius: 12px;
-  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-style: 'Biennale';
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  height: 60px;
+  width: 150px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0, 82, 255, 0.3);
 }
 
 .see-work-btn:hover {
-  background: #0046dd;
+  background: rgba(1, 30, 244, 1);
   transform: translateY(-2px);
   box-shadow: 0 6px 30px rgba(0, 82, 255, 0.4);
 }
@@ -1060,19 +1046,28 @@
 
 /* Section 1 - Blue Gradient Background */
 .why-brands-section-1 {
-  background: linear-gradient(135deg, #001a4d 0%, #003d7a 50%, #0066cc 100%);
+  background-image: url('/coreoffering/Image-1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
 }
 
 /* Section 2 - Dark Gray/Blue Background */
 .why-brands-section-2 {
-  background: linear-gradient(135deg, #1a1a2e 0%, #2d3748 50%, #3a4a5c 100%);
+  background-image: url('/coreoffering/Image-2.png');
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
   color: white;
 }
 
 /* Section 3 - Dark with Teal Gradient */
 .why-brands-section-3 {
-  background: linear-gradient(135deg, #0f1419 0%, #1a2332 30%, #0d3d3d 70%, #0a4d4d 100%);
+  background-image: url('/coreoffering/Image-3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
 }
 
@@ -1121,13 +1116,6 @@
   max-width: 1100px;
 }
 
-.section-label {
-  font-size: 18px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 20px;
-  display: block;
-}
 
 .section-label-white {
   font-size: 16px;
@@ -1339,7 +1327,6 @@
    STUDIO SECTION
    ================================================================= */
 .studio-section {
-  padding: 120px 60px;
   background: var(--color-white);
 }
 
@@ -1357,7 +1344,9 @@
 }
 
 .studio-title-area h2 {
-  font-size: 48px;
+  font-size: 45px;
+  font-style: 'Biennale';
+  font-weight: 600;
   font-weight: 800;
   color: var(--color-black);
   margin-bottom: 8px;
@@ -1365,7 +1354,8 @@
 
 .studio-title-area h3 {
   font-size: 32px;
-  font-weight: 700;
+  font-style: 'Biennale';
+  font-weight: 600;
   color: var(--color-blue-bright);
 }
 
@@ -1502,7 +1492,6 @@
    ================================================================= */
 .footer {
   background: rgba(10, 30, 61, 0.98);
-  padding: 60px 60px 32px;
   color: var(--color-white);
 }
 
@@ -2026,8 +2015,6 @@
 .footer {
   position: relative;
   background: var(--color-bg-light);
-  padding: 100px 60px 40px;
-  margin-top: 120px;
   overflow: hidden;
 
   @media (max-width: 768px) {
@@ -2047,7 +2034,7 @@
   display: grid;
   grid-template-columns: 1.5fr 2fr;
   gap: 80px;
-  margin-bottom: 60px;
+ 
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
@@ -2057,7 +2044,7 @@
 
 .footer-brand {
   .footer-tagline {
-    margin-top: 24px;
+  
     font-size: 18px;
     color: rgba(255, 255, 255, 0.7);
   }
@@ -2149,8 +2136,3 @@
   transform-origin: left;
 }
 
-/* Home Page Layout */
-.home-page {
-  min-height: 100vh;
-  background: var(--color-primary);
-}

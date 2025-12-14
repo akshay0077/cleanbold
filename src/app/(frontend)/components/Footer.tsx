@@ -129,27 +129,21 @@ export default function Footer({ data }: FooterProps) {
           >
             <div className="footer-info-content">
               <div className="footer-brand-section">
-                <h2 className="footer-brand-name">
-                  {data.companyInfo?.brandName ? (
+                <h1 className="footer-brand-name">
+                  {data.companyInfo?.brandName && (
                     <>
                       {data.companyInfo.brandName.split('bold')[0]}
                       <span className="footer-brand-bold">bold</span>
                       <span className="footer-brand-dot">.</span>{' '}
-                      <span className="footer-brand-advertising">
-                        {data.companyInfo.brandName.split('.')[1]?.trim()}
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      Clean<span className="footer-brand-bold">bold</span>
-                      <span className="footer-brand-dot">.</span>{' '}
-                      <span className="footer-brand-advertising">Advertising</span>
+                      {data.companyInfo.advertising && (
+                        <span className="footer-brand-advertising">
+                          {data.companyInfo.advertising}
+                        </span>
+                      )}
                     </>
                   )}
-                </h2>
-                <p className="footer-brand-tagline">
-                  {data.companyInfo?.tagline || 'Where Creativity Converts.'}
-                </p>
+                </h1>
+                <h1 className="footer-brand-tagline">{data.companyInfo?.tagline}</h1>
               </div>
 
               <div className="footer-contact-info">

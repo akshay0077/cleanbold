@@ -25,7 +25,7 @@ export default function FeaturedClients({ data, settings }: FeaturedClientsProps
           transition={{ duration: 0.8 }}
         >
           <p className="section-label">{settings?.sectionLabel || 'Featured Clients/Impact'}</p>
-          <h2>
+          <h2 style={{ fontSize: '45px', fontStyle: 'Biennale', fontWeight: '600' }}>
             {settings?.mainTitle || 'Brands That Trusted The Bold'}
             <span className="dot-accent">.</span>
           </h2>

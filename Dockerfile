@@ -8,26 +8,18 @@ FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 
-# Enable corepack for pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+COPY package.json package-lock.json* ./
 RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then pnpm i --frozen-lockfile; \
+  if [ -f package-lock.json ]; then npm ci; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
 
 # Rebuild the source code only when needed
 FROM base AS builder
-
-# Enable corepack for pnpm in builder stage
-RUN corepack enable && corepack prepare pnpm@latest --activate
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -41,6 +33,7 @@ ARG S3_ENDPOINT
 ARG S3_PUBLIC_URL
 ARG S3_ACCESS_KEY_TOKEN
 ARG S3_SECRET_KEY
+ARG R2_ACCOUNT_ID
 
 # Set environment variables for build
 ENV DATABASE_URI=$DATABASE_URI
@@ -50,6 +43,7 @@ ENV S3_ENDPOINT=$S3_ENDPOINT
 ENV S3_PUBLIC_URL=$S3_PUBLIC_URL
 ENV S3_ACCESS_KEY_TOKEN=$S3_ACCESS_KEY_TOKEN
 ENV S3_SECRET_KEY=$S3_SECRET_KEY
+ENV R2_ACCOUNT_ID=$R2_ACCOUNT_ID
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
@@ -60,9 +54,7 @@ ENV S3_SECRET_KEY=$S3_SECRET_KEY
 RUN mkdir -p ./public
 
 RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then pnpm run build; \
+  if [ -f package-lock.json ]; then npm run build; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
@@ -82,6 +74,7 @@ ARG S3_ENDPOINT
 ARG S3_PUBLIC_URL
 ARG S3_ACCESS_KEY_TOKEN
 ARG S3_SECRET_KEY
+ARG R2_ACCOUNT_ID
 
 ENV DATABASE_URI=$DATABASE_URI
 ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
@@ -90,6 +83,7 @@ ENV S3_ENDPOINT=$S3_ENDPOINT
 ENV S3_PUBLIC_URL=$S3_PUBLIC_URL
 ENV S3_ACCESS_KEY_TOKEN=$S3_ACCESS_KEY_TOKEN
 ENV S3_SECRET_KEY=$S3_SECRET_KEY
+ENV R2_ACCOUNT_ID=$R2_ACCOUNT_ID
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
