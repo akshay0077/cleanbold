@@ -3,18 +3,14 @@ import type { CollectionConfig } from 'payload'
 export const WhyBrandsChoose: CollectionConfig = {
   slug: 'why-brands-choose',
   admin: {
-    useAsTitle: 'mainHeading',
-    defaultColumns: ['mainHeading', 'sectionType', 'order'],
+    defaultColumns: ['sectionLabel', 'sectionType', '_status', 'updatedAt'],
+    useAsTitle: 'sectionLabel',
   },
   versions: {
     drafts: {
       autosave: false,
     },
     maxPerDoc: 30,
-  },
-  admin: {
-    defaultColumns: ['sectionLabel', 'sectionType', '_status', 'updatedAt'],
-    useAsTitle: 'sectionLabel',
   },
   access: {
     read: () => true,

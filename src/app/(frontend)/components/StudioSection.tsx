@@ -3,7 +3,11 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 
-export default function StudioSection() {
+interface StudioSectionProps {
+  data: any
+}
+
+export default function StudioSection({ data }: StudioSectionProps) {
   const studioImages = ['/before-footer-1.png', '/before-footer-2.png', '/before-footer-3.png']
 
   // Duplicate images multiple times for seamless infinite loop

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useState } from 'react'
+import { JSX, useState } from 'react'
 
 interface FooterProps {
   data: any

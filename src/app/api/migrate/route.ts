@@ -178,9 +178,13 @@ export async function GET() {
       await payload.create({
         collection: 'core-offerings',
         data: {
-          ...offeringFields,
+          title: offeringFields.title,
+          description: offeringFields.description,
+          color: offeringFields.color as '#1e3a8a' | '#1f2937' | '#0d9488' | '#7c3aed',
+          imagePosition: offeringFields.imagePosition,
+          order: offeringFields.order,
           image: media.id,
-          _status: 'published',
+          _status: 'published' as any,
         },
       })
       console.log(`  ✅ Created offering: ${offering.title}`)
@@ -213,9 +217,9 @@ export async function GET() {
           data: {
             name: `Brand ${brandNum}`,
             logo: media.id,
-            row: row,
+            row: String(row) as any,
             order: i + 1,
-            _status: 'published',
+            _status: 'published' as any,
           },
         })
       }
@@ -282,7 +286,8 @@ export async function GET() {
         collection: 'why-brands-choose',
         data: {
           ...section,
-          _status: 'published',
+          sectionType: section.sectionType as 'section-1' | 'section-2' | 'section-3',
+          _status: 'published' as any,
         },
       })
       console.log(`  ✅ Created section: ${section.sectionLabel}`)

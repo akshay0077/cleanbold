@@ -3,18 +3,14 @@ import type { CollectionConfig } from 'payload'
 export const CoreOfferings: CollectionConfig = {
   slug: 'core-offerings',
   admin: {
+    defaultColumns: ['title', '_status', 'order', 'updatedAt'],
     useAsTitle: 'title',
-    defaultColumns: ['title', 'color', 'imagePosition', 'order'],
   },
   versions: {
     drafts: {
       autosave: false,
     },
     maxPerDoc: 30,
-  },
-  admin: {
-    defaultColumns: ['title', '_status', 'order', 'updatedAt'],
-    useAsTitle: 'title',
   },
   access: {
     read: () => true,

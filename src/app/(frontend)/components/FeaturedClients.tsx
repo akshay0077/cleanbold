@@ -10,8 +10,8 @@ interface FeaturedClientsProps {
 
 export default function FeaturedClients({ data, settings }: FeaturedClientsProps) {
   // Organize clients into rows
-  const brandRows = [1, 2, 3, 4].map((rowNum) =>
-    data?.filter((client: any) => client.row === rowNum),
+  const brandRows = ['1', '2', '3', '4'].map((rowNum) =>
+    data?.filter((client: any) => String(client.row) === rowNum),
   )
 
   return (

@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 export const ProjectCategories: CollectionConfig = {
   slug: 'project-categories',
   admin: {
+    defaultColumns: ['name', '_status', 'updatedAt'],
     useAsTitle: 'name',
   },
   versions: {
@@ -10,10 +11,6 @@ export const ProjectCategories: CollectionConfig = {
       autosave: false,
     },
     maxPerDoc: 20,
-  },
-  admin: {
-    defaultColumns: ['name', '_status', 'updatedAt'],
-    useAsTitle: 'name',
   },
   access: {
     read: () => true,
