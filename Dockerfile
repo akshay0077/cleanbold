@@ -33,6 +33,24 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Build arguments for environment variables
+ARG DATABASE_URI
+ARG PAYLOAD_SECRET
+ARG S3_BUCKET_NAME
+ARG S3_ENDPOINT
+ARG S3_PUBLIC_URL
+ARG S3_ACCESS_KEY_TOKEN
+ARG S3_SECRET_KEY
+
+# Set environment variables for build
+ENV DATABASE_URI=$DATABASE_URI
+ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
+ENV S3_BUCKET_NAME=$S3_BUCKET_NAME
+ENV S3_ENDPOINT=$S3_ENDPOINT
+ENV S3_PUBLIC_URL=$S3_PUBLIC_URL
+ENV S3_ACCESS_KEY_TOKEN=$S3_ACCESS_KEY_TOKEN
+ENV S3_SECRET_KEY=$S3_SECRET_KEY
+
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
@@ -55,6 +73,23 @@ WORKDIR /app
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
+
+# Runtime environment variables
+ARG DATABASE_URI
+ARG PAYLOAD_SECRET
+ARG S3_BUCKET_NAME
+ARG S3_ENDPOINT
+ARG S3_PUBLIC_URL
+ARG S3_ACCESS_KEY_TOKEN
+ARG S3_SECRET_KEY
+
+ENV DATABASE_URI=$DATABASE_URI
+ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
+ENV S3_BUCKET_NAME=$S3_BUCKET_NAME
+ENV S3_ENDPOINT=$S3_ENDPOINT
+ENV S3_PUBLIC_URL=$S3_PUBLIC_URL
+ENV S3_ACCESS_KEY_TOKEN=$S3_ACCESS_KEY_TOKEN
+ENV S3_SECRET_KEY=$S3_SECRET_KEY
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
