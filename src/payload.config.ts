@@ -2,6 +2,8 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -52,6 +54,37 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    // storage-adapter-placeholder
+    // SEO Plugin - adds SEO fields to all collections and globals
+    seoPlugin({
+      collections: [
+        'projects',
+        'core-offerings',
+        'project-categories',
+        'featured-clients',
+        'why-brands-choose',
+      ],
+      globals: ['header', 'hero', 'footer', 'studio-section', 'site-settings'],
+      uploadsCollection: 'media',
+      generateTitle: ({ doc }: any) =>
+        doc?.title || doc?.name || doc?.sectionLabel || 'Cleanbold Advertising',
+      generateDescription: ({ doc }: any) =>
+        doc?.description || doc?.tagline || 'Where Creativity Converts',
+    }),
+    // S3 Storage Plugin - stores media files in Cloudflare R2 (S3-compatible)
+    s3Storage({
+      collections: {
+        media: true,
+      },
+      bucket: process.env.S3_BUCKET_NAME || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_TOKEN || '',
+          secretAccessKey: process.env.S3_SECRET_KEY || '',
+        },
+        endpoint: process.env.S3_ENDPOINT || '',
+        region: process.env.S3_REGION || '',
+        forcePathStyle: true,
+      },
+    }),
   ],
 })

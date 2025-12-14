@@ -194,6 +194,14 @@ export interface Project {
    * Lower numbers appear first
    */
   order?: number | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -209,6 +217,14 @@ export interface ProjectCategory {
    * URL-friendly version of the name
    */
   slug: string;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -225,6 +241,14 @@ export interface CoreOffering {
   image: string | Media;
   imagePosition: 'top' | 'bottom';
   order: number;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -237,8 +261,16 @@ export interface FeaturedClient {
   id: string;
   name: string;
   logo: string | Media;
-  row: 1 | 2 | 3 | 4;
+  row: '1' | '2' | '3' | '4';
   order: number;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -274,6 +306,14 @@ export interface WhyBrandsChoose {
       }[]
     | null;
   order: number;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -407,6 +447,13 @@ export interface ProjectsSelect<T extends boolean = true> {
   size?: T;
   featured?: T;
   order?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -418,6 +465,13 @@ export interface ProjectsSelect<T extends boolean = true> {
 export interface ProjectCategoriesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -433,6 +487,13 @@ export interface CoreOfferingsSelect<T extends boolean = true> {
   image?: T;
   imagePosition?: T;
   order?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -446,6 +507,13 @@ export interface FeaturedClientsSelect<T extends boolean = true> {
   logo?: T;
   row?: T;
   order?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -474,6 +542,13 @@ export interface WhyBrandsChooseSelect<T extends boolean = true> {
         id?: T;
       };
   order?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -532,6 +607,14 @@ export interface Header {
     text: string;
     url: string;
   };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -545,6 +628,14 @@ export interface Hero {
   heroImage: string | Media;
   title?: string | null;
   subtitle?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -575,6 +666,14 @@ export interface Footer {
       }[]
     | null;
   copyright: string;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -607,6 +706,14 @@ export interface StudioSection {
     locationAddress: string;
     bookButtonText: string;
   };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -637,6 +744,14 @@ export interface SiteSetting {
     description?: string | null;
     ctaButtonText?: string | null;
   };
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+  };
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -661,6 +776,13 @@ export interface HeaderSelect<T extends boolean = true> {
         text?: T;
         url?: T;
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -674,6 +796,13 @@ export interface HeroSelect<T extends boolean = true> {
   heroImage?: T;
   title?: T;
   subtitle?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -708,6 +837,13 @@ export interface FooterSelect<T extends boolean = true> {
         id?: T;
       };
   copyright?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -741,6 +877,13 @@ export interface StudioSectionSelect<T extends boolean = true> {
         locationTitle?: T;
         locationAddress?: T;
         bookButtonText?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
       };
   _status?: T;
   updatedAt?: T;
@@ -777,6 +920,13 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         mainTitle?: T;
         description?: T;
         ctaButtonText?: T;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
       };
   _status?: T;
   updatedAt?: T;
