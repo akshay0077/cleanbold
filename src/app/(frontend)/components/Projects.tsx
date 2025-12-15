@@ -32,14 +32,9 @@ export default function Projects({ data, categories, settings }: ProjectsProps) 
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <p className="section-label-projects">{settings?.sectionLabel || 'Our Projects'}</p>
-          <h2 className="projects-main-title">
-            {settings?.mainTitle || 'Lorem Ipsum Dolar Simit.'}
-          </h2>
-          <p className="projects-description">
-            {settings?.description ||
-              'Lorem ipsum dolor sit amet consectetur. Habitant rutrum id ornare sit curabitur morbi odio. Tristique tincidunt leo.'}
-          </p>
+          <p className="section-label-projects">{settings?.sectionLabel}</p>
+          <h2 className="projects-main-title">{settings?.mainTitle}</h2>
+          <p className="projects-description">{settings?.description}</p>
         </motion.div>
 
         <motion.div
@@ -49,7 +44,7 @@ export default function Projects({ data, categories, settings }: ProjectsProps) 
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {categories?.map((category: any, index: number) => (
+          {[...(categories || [])].reverse().map((category: any, index: number) => (
             <motion.button
               key={category.id || index}
               className={`filter-btn ${selectedCategory === category.name ? 'active' : ''}`}

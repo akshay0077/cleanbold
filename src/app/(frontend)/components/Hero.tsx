@@ -17,21 +17,21 @@ export default function Hero({ data }: HeroProps) {
       <div className="hero-wrapper">
         <OverlappingHero
           imageSrc={'/hero-image.png'}
-          topOverlay={
-            <div style={{ fontSize: '45px', fontStyle: 'Biennale', fontWeight: '600' }}>
-              Sharp Shots.
-            </div>
-          }
-          leftOverlay={
-            <div style={{ fontSize: '45px', fontStyle: 'Biennale', fontWeight: '600' }}>
-              Bold Stories.
-            </div>
-          }
-          rightOverlay={
-            <div style={{ fontSize: '22px', fontStyle: 'Biennale', fontWeight: '400' }}>
-              Brands That Grow.
-            </div>
-          }
+          // topOverlay={
+          //   <div style={{ fontSize: '45px', fontStyle: 'Biennale', fontWeight: '600' }}>
+          //     Sharp Shots.
+          //   </div>
+          // }
+          // leftOverlay={
+          //   <div style={{ fontSize: '45px', fontStyle: 'Biennale', fontWeight: '600' }}>
+          //     Bold Stories.
+          //   </div>
+          // }
+          // rightOverlay={
+          //   <div style={{ fontSize: '22px', fontStyle: 'Biennale', fontWeight: '400' }}>
+          //     Brands That Grow.
+          //   </div>
+          // }
           // bottomOverlay={
           //   <div style={{ fontSize: '22px', fontStyle: 'Biennale', fontWeight: '400' }}>
           //     <Button>Let&apos;s Work</Button>

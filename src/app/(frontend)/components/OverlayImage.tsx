@@ -29,7 +29,7 @@ export default function OverlappingHero({
       />
 
       {/* TOP */}
-      <motion.div
+      {/* <motion.div
         initial={{ y: -40, opacity: 0, x: '-50%' }}
         animate={{ y: 0, opacity: 1, x: '-50%' }}
         transition={{ delay: 0.2 }}
@@ -37,7 +37,7 @@ export default function OverlappingHero({
         style={{ left: '50%' }}
       >
         {topOverlay}
-      </motion.div>
+      </motion.div> */}
 
       {/* BOTTOM */}
       {/* <motion.div
@@ -51,7 +51,7 @@ export default function OverlappingHero({
       </motion.div> */}
 
       {/* LEFT */}
-      <motion.div
+      {/* <motion.div
         initial={{ x: -40, opacity: 0, y: '-50%' }}
         animate={{ x: 0, opacity: 1, y: '-50%' }}
         transition={{ delay: 0.4 }}
@@ -59,10 +59,10 @@ export default function OverlappingHero({
         style={{ top: '50%' }}
       >
         {leftOverlay}
-      </motion.div>
+      </motion.div> */}
 
       {/* RIGHT */}
-      <motion.div
+      {/* <motion.div
         initial={{ x: 40, opacity: 0, y: '-50%' }}
         animate={{ x: 0, opacity: 1, y: '-50%' }}
         transition={{ delay: 0.5 }}
@@ -70,7 +70,7 @@ export default function OverlappingHero({
         style={{ top: '50%' }}
       >
         {rightOverlay}
-      </motion.div>
+      </motion.div> */}
     </div>
   )
 }

@@ -175,9 +175,8 @@ svg {
   font-size: 20px;
   font-style: 'Biennale';
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(85, 85, 85, 1);;
   max-width: 600px;
-  margin: 16px auto 0;
 }
 
 /* Header */
@@ -187,10 +186,14 @@ svg {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+
+  background: transparent;   /* ✅ no background */
+  backdrop-filter: blur(10px); /* optional blur */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 
 .header-container {
   max-width: 1400px;

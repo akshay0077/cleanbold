@@ -26,6 +26,12 @@ export default function CoreOfferings({ data, settings }: CoreOfferingsProps) {
     }
   }
 
+  // Debug: log imagePosition of each offering
+  data.forEach((offering) => {
+    const normalized = offering.imagePosition?.toString().toLowerCase().trim() || 'top'
+    console.log('Original:', offering.imagePosition, 'Normalized:', normalized)
+  })
+
   return (
     <section className="core-offerings" ref={ref}>
       <div className="offerings-container">
@@ -57,10 +63,15 @@ export default function CoreOfferings({ data, settings }: CoreOfferingsProps) {
               const imageUrl =
                 typeof offering.image === 'object' ? offering.image?.url : offering.image
               const backgroundImage = `/coreoffering/Image-${(index % 4) + 1}.png`
+              // Normalize imagePosition to handle case sensitivity and whitespace
+              const imagePosition = offering.imagePosition?.toString().toLowerCase().trim() || 'top'
+              const isTop = imagePosition === 'top'
+              const isBottom = imagePosition === 'bottom'
+
               return (
                 <motion.div
                   key={offering.id || index}
-                  className={`offering-card ${offering.imagePosition === 'top' ? 'image-top' : 'image-bottom'}`}
+                  className={`offering-card ${isTop ? 'image-top' : 'image-bottom'}`}
                   style={{
                     backgroundImage: `url('${backgroundImage}')`,
                     backgroundSize: 'cover',
@@ -71,8 +82,20 @@ export default function CoreOfferings({ data, settings }: CoreOfferingsProps) {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   whileHover={{ y: -8, transition: { duration: 0.2 } }}
                 >
-                  {offering.imagePosition === 'top' && (
+                  {isTop && (
                     <div className="card-image-top">
+                      <Image
+                        src={imageUrl || '/hero-image.png'}
+                        alt={offering.title}
+                        width={280}
+                        height={200}
+                        className="offering-img"
+                      />
+                    </div>
+                  )}
+
+                  {isBottom && (
+                    <div className="card-image-bottom">
                       <Image
                         src={imageUrl || '/hero-image.png'}
                         alt={offering.title}
@@ -87,18 +110,6 @@ export default function CoreOfferings({ data, settings }: CoreOfferingsProps) {
                     <h2>{offering.title}</h2>
                     <p>{offering.description}</p>
                   </div>
-
-                  {offering.imagePosition === 'bottom' && (
-                    <div className="card-image-bottom">
-                      <Image
-                        src={imageUrl || '/hero-image.png'}
-                        alt={offering.title}
-                        width={280}
-                        height={200}
-                        className="offering-img"
-                      />
-                    </div>
-                  )}
                 </motion.div>
               )
             })}
@@ -115,6 +126,17 @@ export default function CoreOfferings({ data, settings }: CoreOfferingsProps) {
             </svg>
           </button>
         </div>
+        <motion.div
+          className="offerings-cta-container"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <button className="offerings-cta">
+            {settings?.exploreButtonText || ' Explore All Services'}
+          </button>
+        </motion.div>
       </div>
     </section>
   )
