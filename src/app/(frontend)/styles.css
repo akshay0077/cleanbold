@@ -316,7 +316,6 @@ svg {
   max-width: 900px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   position: relative;
   background-image: url('/background-image.png');
   background-attachment: fixed;
