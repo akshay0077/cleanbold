@@ -2254,3 +2254,160 @@ background: transparent;   /* ✅ no background */
   transform-origin: left;
 }
 
+
+.masked-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+
+  -webkit-mask-image: url('../../../public/masks/hero-mask.svg');
+  mask-image: url('../../../public/masks/hero-mask.svg');
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+
+.hero-text-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none; /* allow clicks to pass if needed */
+  color: white;
+  font-family: 'Biennale', sans-serif;
+}
+
+/* Top Center */
+.text-top {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 45px;
+  font-weight: 600;
+}
+
+/* Left Side */
+.text-left {
+  position: absolute;
+  top: 50%;
+  left: 40px;
+  transform: translateY(-50%);
+  font-size: 45px;
+  font-weight: 600;
+}
+
+/* Right Side */
+.text-right {
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  font-size: 22px;
+  font-weight: 400;
+}
+
+/* Bottom Center */
+.text-bottom {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hero-btn {
+  pointer-events: auto;
+  padding: 12px 28px;
+  border-radius: 30px;
+  background: white;
+  color: black;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.hero-text {
+  position: absolute;
+  color: white;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 600;
+}
+
+/* TOP CENTER */
+.top-center {
+  top: 0;
+  left: 40%;
+  transform: translateX(-50%);
+}
+
+/* LEFT CENTER */
+.left-center {
+  left: 15px;
+  top: 27%;
+  transform: translateY(-50%);
+}
+
+/* RIGHT CENTER */
+.right-center {
+  right: 0;
+  top: 30%;
+  transform: translateY(-50%);
+}
+
+
+.hero-safe-area {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+
+  /* matches SVG cut */
+  padding: 80px 120px 90px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.btn-primary {
+  background: #0a3cff;
+  color: white;
+  padding: 14px 26px;
+  border-radius: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: white;
+  padding: 14px 26px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+.brand-second{
+  position: absolute;
+    right: 108px;
+    top: 173%;
+    transform: translateY(-50%);
+    font-size: 41px;
+    width: 260px;
+    padding-left: 14px;
+}
