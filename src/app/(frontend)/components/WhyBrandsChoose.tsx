@@ -17,7 +17,7 @@ export default function WhyBrandsChoose({ data }: WhyBrandsChooseProps) {
   return (
     <section className="why-brands-scroll-section" ref={containerRef}>
       {/* Section 1: Why Brands Choose */}
-      <div className="why-brands-section-1">
+      <div className="why-brands-section-1 sticky-section" style={{ top: 0 }}>
         <div className="timeline-container">
           <div className="timeline-line-progress"></div>
           <motion.div
@@ -76,7 +76,7 @@ export default function WhyBrandsChoose({ data }: WhyBrandsChooseProps) {
       </div>
 
       {/* Section 2: Our Approach */}
-      <div className="why-brands-section-2">
+      <div className="why-brands-section-2 sticky-section" style={{ top: 0 }}>
         <div className="timeline-container">
           <div className="timeline-line-progress"></div>
           <motion.div
@@ -126,7 +126,7 @@ export default function WhyBrandsChoose({ data }: WhyBrandsChooseProps) {
       </div>
 
       {/* Section 3: Where Creativity Meets Conversion */}
-      <div className="why-brands-section-3">
+      <div className="why-brands-section-3 sticky-section" style={{ top: 0 }}>
         <div className="timeline-container">
           <div className="timeline-line-progress"></div>
           <motion.div

@@ -271,7 +271,6 @@ svg {
   z-index: 0;
 
   .background-image {
-    object-fit: cover;
     opacity: 0.3;
   }
 }
@@ -391,6 +390,8 @@ svg {
   min-width: 300px;
   display: flex;
   align-items: center;
+   margin-top: 8px;
+  margin-left:320px;
 }
 
 .studio-description p {
@@ -1120,7 +1121,7 @@ svg {
 
 .hero-cta-a {
   position: absolute;
-  bottom: 7px;
+  bottom: -98px;
   left: 38%;
   transform: translateX(-50%);
   display: flex;
@@ -1224,15 +1225,15 @@ svg {
     right: 108px;
     top: 173%;
     transform: translateY(-50%);
-    font-size: 41px;
-    width: 260px;
+    font-size: 54px;
+    width: 300px;
     padding-left: 14px;
 }
 
 .brand-right{
   position: relative;
-    right: 111px;
+    right: 88px;
     top: 120%;
-    font-size: 41px;
+    font-size: 54px;
     margin-top: 11px;
 }

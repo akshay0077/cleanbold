@@ -12,7 +12,7 @@ export default function Hero({ data }: HeroProps) {
 
   return (
     <section className="hero" id="hero">
-      <div className="hero-wrapper" style={{ position: 'relative', width: 1210, height: 671 }}>
+      <div className="hero-wrapper" style={{ position: 'relative', width: 1320, height: 685 }}>
         {/* 1️⃣ FULL IMAGE (INITIAL) */}
         <motion.div
           initial={{ opacity: 1 }}
@@ -26,6 +26,7 @@ export default function Hero({ data }: HeroProps) {
             position: 'absolute',
             inset: 0,
             zIndex: 2,
+            height: '100%',
           }}
         >
           <Image
@@ -33,13 +34,13 @@ export default function Hero({ data }: HeroProps) {
             alt="Hero Full"
             fill
             priority
-            style={{ objectFit: 'cover', borderRadius: '48px' }}
+            style={{ borderRadius: '48px' }}
           />
         </motion.div>
 
         {/* 2️⃣ MASKED IMAGE (AFTER DELAY) */}
         <motion.svg
-          width="1210"
+          width="1610"
           height="671"
           viewBox="0 0 1210 671"
           fill="none"
@@ -52,7 +53,16 @@ export default function Hero({ data }: HeroProps) {
             duration: 1,
             ease: 'easeOut',
           }}
-          style={{ position: 'absolute', inset: 0, zIndex: 1 }}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 1,
+            width: '123%',
+            height: '118%',
+            opacity: 1,
+            transform: 'none',
+            left: '-257px',
+          }}
         >
           <mask
             id="mask0_18775_29159"

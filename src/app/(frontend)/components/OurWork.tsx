@@ -41,23 +41,38 @@ export default function CoreOfferings({ data, settings }: CoreOfferingsProps) {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <p className="section-label">{settings?.sectionLabel}</p>
-          <h2>{settings?.mainTitle}</h2>
-          <p className="section-description">{settings?.description}</p>
+          <div className="offerings-header-content">
+            <p className="section-label">{settings?.sectionLabel}</p>
+            <h2>{settings?.mainTitle}</h2>
+            <p className="section-description">{settings?.description}</p>
+          </div>
+
+          <div className="offerings-header-controls">
+            <button className="carousel-btn prev" onClick={handlePrev} aria-label="Previous">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+
+            <button className="carousel-btn next" onClick={handleNext} aria-label="Next">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
         </motion.div>
 
         <div className="offerings-carousel">
-          <button className="carousel-btn prev" onClick={handlePrev} aria-label="Previous">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M15 18L9 12L15 6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-
           <div className="offerings-scroll" ref={scrollRef}>
             {data?.map((offering: any, index: number) => {
               const imageUrl =
@@ -114,17 +129,6 @@ export default function CoreOfferings({ data, settings }: CoreOfferingsProps) {
               )
             })}
           </div>
-
-          <button className="carousel-btn next" onClick={handleNext} aria-label="Next">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M9 18L15 12L9 6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
         </div>
         <motion.div
           className="offerings-cta-container"
