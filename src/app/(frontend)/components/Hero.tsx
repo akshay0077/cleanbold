@@ -1,43 +1,26 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 
-interface HeroProps {
-  data: any
-}
+export default function Hero() {
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault()
+    const element = document.getElementById(targetId.replace('#', ''))
+    if (element) {
+      const headerOffset = 80
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
 
-export default function Hero({ data }: HeroProps) {
-  const heroImageUrl = typeof data.heroImage === 'object' ? data.heroImage?.url : data.heroImage
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      })
+    }
+  }
 
   return (
     <section className="hero" id="hero">
       <div className="hero-wrapper" style={{ position: 'relative', width: 1320, height: 685 }}>
-        {/* 1️⃣ FULL IMAGE (INITIAL) */}
-        <motion.div
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 0 }}
-          transition={{
-            delay: 3, // wait 3 seconds
-            duration: 1, // fade out duration
-            ease: 'easeInOut',
-          }}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 2,
-            height: '100%',
-          }}
-        >
-          <Image
-            src={heroImageUrl}
-            alt="Hero Full"
-            fill
-            priority
-            style={{ borderRadius: '48px' }}
-          />
-        </motion.div>
-
         {/* 2️⃣ MASKED IMAGE (AFTER DELAY) */}
         <motion.svg
           width="1610"
@@ -48,11 +31,6 @@ export default function Hero({ data }: HeroProps) {
           xmlnsXlink="http://www.w3.org/1999/xlink"
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            delay: 3.2, // starts slightly after fade out
-            duration: 1,
-            ease: 'easeOut',
-          }}
           style={{
             position: 'absolute',
             inset: 0,
@@ -142,7 +120,7 @@ export default function Hero({ data }: HeroProps) {
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 5.0, duration: 0.6, ease: 'easeOut' }}
+              transition={{ delay: 5, duration: 0.6, ease: 'easeOut' }}
               className="hero-text right-center"
             >
               <h3 className="brand-right">Brands</h3>
@@ -158,7 +136,11 @@ export default function Hero({ data }: HeroProps) {
             className="hero-cta-a"
           >
             <button className="btn-primary">Start My Brand Journey</button>
-            <button className="btn-secondary">See Our Work</button>
+            <button className="btn-secondary">
+              <a href="#work" onClick={(e) => handleSmoothScroll(e, '#work')}>
+                See Our Work
+              </a>
+            </button>
           </motion.div>
         </div>
       </div>

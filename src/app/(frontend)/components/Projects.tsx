@@ -85,7 +85,11 @@ export default function Projects({ data, categories, settings }: ProjectsProps) 
                       height={600}
                       className="project-image"
                     />
-                    <span className="project-category-badge">{categoryName}</span>
+                    <span
+                      className={`project-category-badge ${index % 2 === 1 ? 'badge-right' : ''}`}
+                    >
+                      {categoryName}
+                    </span>
                   </div>
                   <div className="project-content">
                     <h3 className="project-title">{project.title}</h3>

@@ -18,7 +18,7 @@ export default async function HomePage() {
     <div className="home-page">
       <Header data={data.header} />
       <div id="hero">
-        <Hero data={data.hero} />
+        <Hero />
       </div>
       <div id="services">
         <CoreOfferings
