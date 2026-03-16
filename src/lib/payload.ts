@@ -1,16 +1,15 @@
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 
-// Initialize Payload
-let cachedPayload: any = null
+const globalCache = global as typeof globalThis & { payload: any }
 
 export async function getPayloadClient() {
-  if (cachedPayload) {
-    return cachedPayload
+  if (globalCache.payload) {
+    return globalCache.payload
   }
 
-  cachedPayload = await getPayload({ config })
-  return cachedPayload
+  globalCache.payload = await getPayload({ config })
+  return globalCache.payload
 }
 
 // Fetch all data for homepage

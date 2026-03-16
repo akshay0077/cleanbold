@@ -9,11 +9,6 @@ interface FeaturedClientsProps {
 }
 
 export default function FeaturedClients({ data, settings }: FeaturedClientsProps) {
-  // Organize clients into rows
-  const brandRows = ['1', '2', '3', '4'].map((rowNum) =>
-    data?.filter((client: any) => String(client.row) === rowNum),
-  )
-
   return (
     <section className="featured-clients-section">
       <div className="clients-container">
@@ -35,32 +30,21 @@ export default function FeaturedClients({ data, settings }: FeaturedClientsProps
           </p>
         </motion.div>
 
-        <div className="clients-marquee-wrapper">
-          {brandRows.map((row, rowIndex) => (
-            <div key={rowIndex} className="clients-marquee-row">
-              <div
-                className={`clients-marquee-track ${
-                  rowIndex % 2 === 0 ? 'scroll-right-to-left' : 'scroll-left-to-right'
-                }`}
-              >
-                {/* Duplicate images 3 times for seamless loop */}
-                {[...row, ...row, ...row].map((client: any, index: number) => {
-                  const logoUrl = typeof client.logo === 'object' ? client.logo?.url : client.logo
-                  return (
-                    <div key={index} className="client-brand-card">
-                      <Image
-                        src={logoUrl || '/brand/brand-1.png'}
-                        alt={client.name || `Brand ${index + 1}`}
-                        width={200}
-                        height={100}
-                        className="client-brand-logo"
-                      />
-                    </div>
-                  )
-                })}
+        <div className="clients-grid-wrapper">
+          {data?.map((client: any, index: number) => {
+            const logoUrl = typeof client.logo === 'object' ? client.logo?.url : client.logo
+            return (
+              <div key={index} className="client-brand-card">
+                <Image
+                  src={logoUrl || '/brand/brand-1.png'}
+                  alt={client.name || `Brand ${index + 1}`}
+                  width={200}
+                  height={100}
+                  className="client-brand-logo"
+                />
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         <motion.div
